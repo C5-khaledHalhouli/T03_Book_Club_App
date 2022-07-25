@@ -5,6 +5,7 @@ const bookRouter=require("./routes/bookRouter")
 const commentRouter=require("./routes/commentRouter")
 const roleRouter=require("./routes/roleRouter")
 const suggestBooksRouter=require("./routes/suggestBooksRouter")
+const loginRouter=require("./routes/loginRouter")
 
 const app=express()
 app.use(express.json())
@@ -15,7 +16,7 @@ app.use("/book",bookRouter)
 app.use("/comment",commentRouter)
 app.use("/role",roleRouter)
 app.use("/suggestBooks",suggestBooksRouter)
-
+app.use("/login",loginRouter)
 
 PORT=5000
 
