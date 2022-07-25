@@ -1,4 +1,5 @@
 const express =require("express")
+require("dotenv").config()
 const db =require("./model/db")
 const userRouter=require("./routes/userRouter")
 const bookRouter=require("./routes/bookRouter")
@@ -18,7 +19,7 @@ app.use("/role",roleRouter)
 app.use("/suggestBooks",suggestBooksRouter)
 app.use("/login",loginRouter)
 
-PORT=5000
+PORT=process.env.PORT
 
 app.listen(PORT,()=>{
     console.log(`server is listen at ${PORT}`);

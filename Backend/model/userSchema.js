@@ -15,8 +15,8 @@ userSchema.pre("save",async function(){
     this.email=this.email.toLowerCase()
    
 
-    const salt=10
-    const hashPassword= await bycrypt.hash(this.password,salt)
+    const salt=process.env.SALT
+    const hashPassword= await bycrypt.hash(this.password,+salt)
     this.password=hashPassword
 })
 

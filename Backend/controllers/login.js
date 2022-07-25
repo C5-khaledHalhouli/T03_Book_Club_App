@@ -14,7 +14,7 @@ bcrypt.compare(password,resultM.password,(err,result)=>{
     if(result){
         const payload={email:resultM.email,userName:resultM.userName,userid:resultM._id,role:resultM.role.role}
         console.log(payload);
-        const secret="book"
+        const secret=process.env.SECRET
         const token =jwt.sign(payload,secret)
         res.status(200).json(token)
     }else{
