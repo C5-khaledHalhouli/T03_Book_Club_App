@@ -24,5 +24,14 @@ res.status(200).json(result)
 
     })
 }
+const deleteComment=(req,res)=>{
+    const {commentId}=req.params
+    const userId=req.token.userid
+    commentModel.findOneAndDelete({$and:[{_id:commentId},{user:userId}]}).then((result)=>{
+res.status(200).json({result,succ:true})
+    }).catch((err)=>{
+        res.status(404).json({err})
 
-module.exports = {createComment,getAllComment}
+    })
+}
+module.exports = {createComment,getAllComment,deleteComment}
