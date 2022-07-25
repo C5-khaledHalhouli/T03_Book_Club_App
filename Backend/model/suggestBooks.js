@@ -1,0 +1,9 @@
+const mongoose= require("mongoose")
+
+
+const suggestBooksSchema= new mongoose.Schema({
+    bookName:{type:String,required:true},
+    user:{type:mongoose.Schema.Types.ObjectId,ref:"User"},
+})
+
+module.exports =mongoose.model("SuggestBooks",suggestBooksSchema)
