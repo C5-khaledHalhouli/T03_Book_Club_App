@@ -1,0 +1,5 @@
+.mainPage{
+    display: flex;
+    padding: 5%;
+    gap: 5%;
+}
