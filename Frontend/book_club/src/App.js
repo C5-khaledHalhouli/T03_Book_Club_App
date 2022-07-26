@@ -3,6 +3,7 @@ import MainPage from './Component/MainPage';
 import {Routes,Route} from "react-router-dom"
 import NavBar from './Component/NavBar/NavBar';
 import BookPage from './Component/BookPage';
+import Room from "./Component/Room/index"
 function App() {
   return (
     <div className="App">
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path='/' element={<MainPage/>}/>
           <Route path="/:bookId" element={<BookPage/>}/>
+          <Route path="/rooms" element={<Room/>}/>
         </Routes>
         
       </header>
