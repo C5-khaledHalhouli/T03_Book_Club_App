@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -14,10 +14,9 @@ const Login=({show,setShow,setIsLoggedIn,setAccount})=>{
 
 const loginClick=()=>{
 axios.post("http://localhost:5000/login",{email,password}).then((result)=>{
-    console.log(result,typeof(result.status));
     if(result.status===200){
         localStorage.setItem("isLoggedIn",true)
-        localStorage.setItem("token",result.data.token)
+        localStorage.setItem("token",JSON.stringify( result.data))
         setAccount(result.data.userName)
         setIsLoggedIn(true)
 

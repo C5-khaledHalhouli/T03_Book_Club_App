@@ -4,14 +4,14 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-const SignUp = () => {
-  const handleClose = () => setShow(false);
+const SignUp = ({ showSignUp, setShowSignUp }) => {
+  const handleClose = () => setShowSignUp(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [massage, setMassage] = useState("");
 
-  const signUpClick = ({ show, setShow }) => {
+  const signUpClick = () => {
     axios
       .post("http://localhost:5000/user", {
         userName,
@@ -33,7 +33,7 @@ const SignUp = () => {
     }, 2000);
   };
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={showSignUp} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Sign up</Modal.Title>
       </Modal.Header>
@@ -53,7 +53,7 @@ const SignUp = () => {
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
             <Form.Label>Email</Form.Label>
             <Form.Control
-              type="password"
+              type="email"
               placeholder="name@example.com"
               onChange={(e) => {
                 setEmail(e.target.value);
@@ -84,4 +84,4 @@ const SignUp = () => {
   );
 };
 
-export default signUp;
+export default SignUp;

@@ -8,14 +8,17 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../Login/index";
 import React,{useState,useEffect} from "react"
-import signUp from "../SignUp/index"
+import SignUp from "../SignUp/index"
 const NavBar = () => {
   const [show, setShow] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+
   const [account, setAccount] = useState("Account")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   useEffect(()=>{
-    if(localStorage.getItem("isLoggedIn")){
+    if(localStorage.getItem("isLoggedIn")==="true"){
         setIsLoggedIn(localStorage.getItem("isLoggedIn"))
+        setAccount(JSON.parse(localStorage.getItem("token")).userName)
     }
   },[])
   const signOut=()=>{
@@ -53,7 +56,7 @@ const NavBar = () => {
                     {isLoggedIn?(<NavDropdown.Item onClick={()=>{signOut()}}>SignOut</NavDropdown.Item>
                 ):(<>
                   <NavDropdown.Item onClick={()=>{setShow(true)}}>SignIn</NavDropdown.Item>
-                  <NavDropdown.Item href="#action4">
+                  <NavDropdown.Item onClick={()=>{setShowSignUp(true)}}>
                   SignUp
                   </NavDropdown.Item>
                 </>
@@ -76,7 +79,7 @@ const NavBar = () => {
         </Container>
       </Navbar>
       <Login show={show} setShow={setShow} setIsLoggedIn={setIsLoggedIn} setAccount={setAccount}/>
-      <signUp show={show} setShow={setShow}/>
+      <SignUp showSignUp={showSignUp} setShowSignUp={setShowSignUp}/>
     </>
   );
 };
