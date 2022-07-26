@@ -21,7 +21,7 @@ const Room = () => {
   return <div className="roomPage">
     {room&&room.map((element,index)=>{
         return <Card>
-        <Card.Header>Quote</Card.Header>
+        <Card.Header>Room {index}</Card.Header>
         <Card.Body>
           <blockquote className="blockquote mb-0">
             <p>
