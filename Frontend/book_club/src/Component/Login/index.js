@@ -3,9 +3,11 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios"
+import { useDispatch } from 'react-redux/es/exports';
+import { loginAction } from '../Redux/Reducers/logIn';
 
-const Login=({show,setShow,setIsLoggedIn,setAccount})=>{
-
+const Login=({show,setShow})=>{
+const dispatch =useDispatch()
     
 
     const handleClose = () => setShow(false);
@@ -17,8 +19,7 @@ axios.post("http://localhost:5000/login",{email,password}).then((result)=>{
     if(result.status===200){
         localStorage.setItem("isLoggedIn",true)
         localStorage.setItem("token",JSON.stringify( result.data))
-        setAccount(result.data.userName)
-        setIsLoggedIn(true)
+        dispatch(loginAction(result.data))
 
     }
 

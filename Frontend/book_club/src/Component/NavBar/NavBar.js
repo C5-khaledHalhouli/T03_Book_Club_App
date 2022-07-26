@@ -10,8 +10,17 @@ import Login from "../Login/index";
 import React, { useState, useEffect } from "react";
 import SignUp from "../SignUp/index";
 import {useNavigate}  from "react-router-dom"
-const NavBar = ({ setIsLoggedIn, isLoggedIn }) => {
+import { useSelector,useDispatch } from "react-redux";
+import {signOutAction} from "../Redux/Reducers/logIn/index"
+const NavBar = () => {
     const navigate=useNavigate()
+const dispatch =useDispatch()
+    const state =useSelector((state)=>{
+        return{
+            userName:state.login.userName,
+            isLoggedIn:state.login.isLoggedIn
+        }
+    })
   const [show, setShow] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
 
@@ -23,8 +32,8 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn }) => {
     }
   }, []);
   const signOut = () => {
-    setIsLoggedIn(false);
-    setAccount("Account");
+    dispatch(signOutAction())
+    
     localStorage.setItem("isLoggedIn", false);
     localStorage.removeItem("token");
   };
@@ -50,14 +59,14 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn }) => {
                 <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
                 <Nav.Link onClick={()=>{navigate("/")}}>Room</Nav.Link>
                 <NavDropdown
-                  title={`${account}`}
+                  title={`${state.userName}`}
                   id={`offcanvasNavbarDropdown-expand-${"sm"}`}
                 >
-                  {isLoggedIn ? (
+                  {state.isLoggedIn ? (
                     <>
                       <NavDropdown.Item
                         
-                        onClick={()=>{navigate("/")}}
+                        onClick={()=>{navigate("/readinglist")}}
                       >
                         Reading list
                       </NavDropdown.Item>
@@ -105,7 +114,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn }) => {
       <Login
         show={show}
         setShow={setShow}
-        setIsLoggedIn={setIsLoggedIn}
+        
         setAccount={setAccount}
       />
       <SignUp showSignUp={showSignUp} setShowSignUp={setShowSignUp} />

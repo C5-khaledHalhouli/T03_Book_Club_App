@@ -5,9 +5,21 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css";
 import { Link } from "react-router-dom";
-const MainPage = ({isLoggedIn}) => {
+import { useSelector } from "react-redux/";
+
+
+
+
+const MainPage = () => {
   const [books, setBooks] = useState("");
   const [token, setToken] = useState();
+
+  const state =useSelector((state)=>{
+    return{
+        
+        isLoggedIn:state.login.isLoggedIn
+    }
+})
   useEffect(() => {
     axios
       .get("http://localhost:5000/book")
@@ -50,7 +62,7 @@ const MainPage = ({isLoggedIn}) => {
                   {element.description.split(" ").slice(0, 20).join(" ")}...
                   <Link to={`/${element._id}`}>see more</Link>
                 </Card.Text>
-                {isLoggedIn ? (
+                {state.isLoggedIn ? (
                   <Button
                     variant="primary"
                     onClick={() => {
