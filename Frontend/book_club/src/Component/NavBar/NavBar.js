@@ -8,7 +8,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../Login/index";
 import React,{useState,useEffect} from "react"
-
+import signUp from "../SignUp/index"
 const NavBar = () => {
   const [show, setShow] = useState(false);
   const [account, setAccount] = useState("Account")
@@ -76,6 +76,7 @@ const NavBar = () => {
         </Container>
       </Navbar>
       <Login show={show} setShow={setShow} setIsLoggedIn={setIsLoggedIn} setAccount={setAccount}/>
+      <signUp show={show} setShow={setShow}/>
     </>
   );
 };
