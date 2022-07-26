@@ -1,0 +1,13 @@
+.bookPage{
+    display: grid;
+    grid-template-columns: 35% auto;
+    padding: 5%;
+}
+.imgBook{
+    width:100%;
+    height: 100%;
+}
+.bookInfo{
+    padding: 0% 5%;
+
+}

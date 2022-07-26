@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css"
+import {Link} from "react-router-dom"
 const MainPage = () => {
   const [books, setBooks] = useState("");
 
@@ -28,8 +29,8 @@ const MainPage = () => {
               <Card.Body>
                 <Card.Title>{element.bookName}</Card.Title>
                 <Card.Text>
-                  {element.description.split(" ").slice(0, 20).join(" ")}...see
-                  more
+                  {element.description.split(" ").slice(0, 20).join(" ")}...<Link to={`/${element._id}`}>see
+                  more</Link>
                 </Card.Text>
                 <Button variant="primary">Go somewhere</Button>
               </Card.Body>
