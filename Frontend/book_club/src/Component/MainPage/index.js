@@ -42,6 +42,9 @@ const MainPage = () => {
                   {element.description.split(" ").slice(0, 20).join(" ")}...
                   <Link to={`/${element._id}`}>see more</Link>
                 </Card.Text>
+                <Card.Text>
+                  {element.reader}
+                </Card.Text>
                 {state.isLoggedIn ? (
                   <Button
                     variant="primary"

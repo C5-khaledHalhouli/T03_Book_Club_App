@@ -20,10 +20,28 @@ const book = createSlice({
         return element._id !== action.payload;
       });
     },
-    getReader
+    getReader(state, action) {
+      
+      state.books.forEach((elementBook, index) => {
+        let numReader = action.payload.result.filter((element) => {
+          return elementBook._id === element.book;
+        }).length;
+        state.books[index].reader = numReader;
+        
+      });
+    },
+    deleteBook(state,action){
+      state.books=state.books.filter((element)=>{
+        return element._id!==action.payload
+      })
+    }
   },
 });
 
-export const { addReadingListBook, deleteBookReadingList, getAllBooks } =
-  book.actions;
+export const {
+  addReadingListBook,
+  deleteBookReadingList,
+  getAllBooks,
+  getReader,deleteBook
+} = book.actions;
 export default book.reducer;

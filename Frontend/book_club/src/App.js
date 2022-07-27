@@ -8,7 +8,8 @@ import Room from "./Component/Room/index";
 import ReadingListPage from "./Component/ReadingListPage/index";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "./Component/Redux/Reducers/logIn/index";
-import { getAllBooks } from "./Component/Redux/Reducers/book/index";
+import { getAllBooks,getReader } from "./Component/Redux/Reducers/book/index";
+import AdminPage from "./Component/AdminPage/index"
 import axios from "axios";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
       })
       .then((result) => {
        console.log(result);
+       dispatch(getReader(result.data))
       })
       .catch((err) => {
         console.log(err);
@@ -52,6 +54,7 @@ function App() {
           <Route path="/:bookId" element={<BookPage />} />
           <Route path="/rooms" element={<Room />} />
           <Route path="/readinglist" element={<ReadingListPage />} />
+          <Route path="/AdminPage"  element={<AdminPage/>}/>
         </Routes>
       </header>
     </div>
