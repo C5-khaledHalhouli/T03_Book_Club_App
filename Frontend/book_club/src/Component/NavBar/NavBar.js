@@ -42,7 +42,7 @@ const dispatch =useDispatch()
     <>
       <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
         <Container fluid>
-          <Navbar.Brand onClick={()=>{navigate("/")}}>Club-Book</Navbar.Brand>
+          <Navbar.Brand >Club-Book</Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"sm"}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${"sm"}`}

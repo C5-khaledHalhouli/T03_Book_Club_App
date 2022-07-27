@@ -1,39 +1,55 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Card from "react-bootstrap/Card";
-import { useSelector } from "react-redux/";
+import { useSelector, useDispatch } from "react-redux/";
+import { addReadingListBook,deleteBookReadingList } from "../Redux/Reducers/book";
+import Button from 'react-bootstrap/Button';
 import "./style.css";
 
 const ReadingListPage = () => {
+  const dispatch = useDispatch();
   const state = useSelector((state) => {
     return {
       userName: state.login.userName,
       isLoggedIn: state.login.isLoggedIn,
       token: state.login.token,
+      readingListBook: state.book.readingListBook,
     };
   });
 
-  const [book, setBook] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:5000/user/readinglist", {
         headers: { Authorization: `Bearer ${state.token}` },
       })
       .then((result) => {
-        setBook(result.data.result);
+        dispatch(addReadingListBook(result.data.result));
+        
       })
       .catch((err) => {
         console.log(err);
       });
   }, [state.token]);
 
+  const deleteClick=(readingListId)=>{
+    axios.delete(`http://localhost:5000/user/readinglist/${readingListId}`,{
+      headers: { Authorization: `Bearer ${state.token}` }}).then((result) => {
+      
+      dispatch(deleteBookReadingList(readingListId))
+      
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   return (
     <div className="readingListPage">
-      {book &&
-        book.map((element, index) => {
+      {state.readingListBook &&
+        state.readingListBook.map((element, index) => {
           return (
             <div className="cardbook" key={index + "readingBook"}>
-              <img src={`${element.book.img}`} />
+              <img src={`${element.book.img}`} className="imgReadingList" />
               <Card style={{ width: "100%" }}>
                 <Card.Body>
                   <Card.Title>{element.book.bookName}</Card.Title>
@@ -41,6 +57,10 @@ const ReadingListPage = () => {
                     {element.book.author}
                   </Card.Subtitle>
                   <Card.Text>{element.book.description}</Card.Text>
+                  <Button variant="primary" onClick={()=>{
+                    
+                    deleteClick(element._id)
+                  }}>Delete</Button>
                 </Card.Body>
               </Card>
             </div>
