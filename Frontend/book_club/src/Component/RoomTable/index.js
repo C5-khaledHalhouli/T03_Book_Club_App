@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { deleteRoom } from "../Redux/Reducers/room/index";
+import { deleteRoom, getAllRooms } from "../Redux/Reducers/room/index";
 import axios from "axios";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
@@ -12,15 +12,18 @@ const RoomTable = () => {
   const dispatch = useDispatch();
   const [bookId, setBookId] = useState("");
   const state = useSelector((state) => {
-      return {
-          rooms: state.room.rooms,
-          books: state.book.books,
-        };
-    });
-    const [showBook,setShowBook]=useState()
-    useEffect(()=>{
-       state.books.length? setShowBook(state.books[0].bookName):setShowBook("")
-    },[state.books])
+    return {
+      rooms: state.room.rooms,
+      books: state.book.books,
+    };
+  });
+  const [showBook, setShowBook] = useState();
+  useEffect(() => {
+    if (state.books.length) {
+      setShowBook(state.books[0].bookName);
+      setBookId(state.books[0]._id);
+    }
+  }, [state.books]);
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <a
@@ -35,7 +38,6 @@ const RoomTable = () => {
       &#x25bc;
     </a>
   ));
-
 
   const CustomMenu = React.forwardRef(
     ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
@@ -70,9 +72,7 @@ const RoomTable = () => {
     dispatch(deleteRoom(roomId));
     axios
       .delete(`http://localhost:5000/room/${roomId}`)
-      .then((result) => {
-        console.log(result);
-      })
+      .then((result) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -81,7 +81,14 @@ const RoomTable = () => {
     axios
       .post(`http://localhost:5000/room/${bookId}`)
       .then((result) => {
-        console.log(result);
+        axios
+          .get("http://localhost:5000/room")
+          .then((result) => {
+            dispatch(getAllRooms(result.data));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
@@ -97,29 +104,30 @@ const RoomTable = () => {
         </tr>
       </thead>
       <tbody>
+        <tr>
         <td></td>
         <td>
           <Dropdown>
             <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
               {showBook}
             </Dropdown.Toggle>
-            <Dropdown.Menu as={CustomMenu} >
+            <Dropdown.Menu as={CustomMenu}>
               {state.books.length &&
                 state.books.map((element, index) => {
-                 
-                    return (
-                      <Dropdown.Item eventKey={`${index}`} onClick={(e)=>{
-                        setBookId(element._id)
+                  return (
+                    <Dropdown.Item
+                      eventKey={`${index}`}
+                      onClick={(e) => {
+                        setBookId(element._id);
                         console.log(element._id);
-                        setShowBook(element.bookName)
-                      }} >
-                        {element.bookName}
-                      </Dropdown.Item>
-                    );
-                  
+                        setShowBook(element.bookName);
+                      }}
+                    >
+                      {element.bookName}
+                    </Dropdown.Item>
+                  );
                 })}
             </Dropdown.Menu>
-            ;
           </Dropdown>
         </td>
         <td>
@@ -132,7 +140,7 @@ const RoomTable = () => {
             Create Room
           </Button>
         </td>
-
+        </tr>
         {state.rooms &&
           state.rooms.map((element, index) => {
             return (
