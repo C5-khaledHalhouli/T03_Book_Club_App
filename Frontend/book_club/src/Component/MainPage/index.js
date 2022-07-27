@@ -35,7 +35,7 @@ const MainPage = () => {
         state.books.map((element, index) => {
           return (
             <Card style={{ width: "18rem" }} key={index + "book"}>
-              <Card.Img variant="top" src={`${element.img}`} />
+              <Card.Img variant="top" src={`${element.img}`} alt={`img of ${element.bookName} book`}/>
               <Card.Body>
                 <Card.Title>{element.bookName}</Card.Title>
                 <Card.Text>

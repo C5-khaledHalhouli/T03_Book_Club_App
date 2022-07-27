@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginAction } from "./Component/Redux/Reducers/logIn/index";
 import { getAllBooks,getReader } from "./Component/Redux/Reducers/book/index";
 import AdminPage from "./Component/AdminPage/index"
+import {getAllRooms} from "./Component/Redux/Reducers/room/index"
+import RoomTable from "./Component/RoomTable";
 import axios from "axios";
 
 function App() {
@@ -37,12 +39,22 @@ function App() {
         headers: { Authorization: `Bearer ${state.token}` },
       })
       .then((result) => {
-       console.log(result);
+       
        dispatch(getReader(result.data))
       })
       .catch((err) => {
         console.log(err);
       });
+      axios
+      .get("http://localhost:5000/room")
+      .then((result) => {
+       console.log(result);
+       dispatch(getAllRooms(result.data))
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   }, []);
 
   return (
@@ -55,6 +67,8 @@ function App() {
           <Route path="/rooms" element={<Room />} />
           <Route path="/readinglist" element={<ReadingListPage />} />
           <Route path="/AdminPage"  element={<AdminPage/>}/>
+          <Route path="/roomsTable"  element={<RoomTable/>}/>
+
         </Routes>
       </header>
     </div>

@@ -41,7 +41,7 @@ const AdminPage = () => {
         {state.books &&
           state.books.map((element, index) => {
             return (
-              <tr>
+              <tr key={index+"td"}>
                 <td>
                   <img
                     src={`${element.img}`}
