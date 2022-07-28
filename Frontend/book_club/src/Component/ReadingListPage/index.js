@@ -23,6 +23,7 @@ const ReadingListPage = () => {
         headers: { Authorization: `Bearer ${state.token}` },
       })
       .then((result) => {
+      
         dispatch(addReadingListBook(result.data.result));
         
       })
@@ -45,8 +46,9 @@ const ReadingListPage = () => {
 
   return (
     <div className="readingListPage">
-      {state.readingListBook &&
+      {state.readingListBook.length &&
         state.readingListBook.map((element, index) => {
+          
           return (
             <div className="cardbook" key={index + "readingBook"}>
               <img src={`${element.book.img}`} className="imgReadingList" />

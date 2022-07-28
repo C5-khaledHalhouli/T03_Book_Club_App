@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import MainPage from "./Component/MainPage";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./Component/NavBar/NavBar";
@@ -13,6 +13,8 @@ import AdminPage from "./Component/AdminPage/index"
 import {getAllRooms} from "./Component/Redux/Reducers/room/index"
 import RoomTable from "./Component/RoomTable";
 import axios from "axios";
+import {getAllComment} from "./Component/Redux/Reducers/comment/index"
+import RoomPage from "./Component/RoomPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+      
     axios
       .get("http://localhost:5000/book/readers/", {
         headers: { Authorization: `Bearer ${state.token}` },
@@ -68,6 +71,7 @@ function App() {
           <Route path="/readinglist" element={<ReadingListPage />} />
           <Route path="/AdminPage"  element={<AdminPage/>}/>
           <Route path="/roomsTable"  element={<RoomTable/>}/>
+          <Route path="/room/:bookId"  element={<RoomPage/>}/>
 
         </Routes>
       </header>

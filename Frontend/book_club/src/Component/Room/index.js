@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import "bootstrap/dist/css/bootstrap.min.css";
+import {Link} from "react-router-dom"
 
 
 const Room = () => {
@@ -11,7 +12,6 @@ const Room = () => {
       .get("http://localhost:5000/room")
       .then((result) => {
         setRoom(result.data);
-        console.log(result.data);
       })
       .catch((err) => {
         console.log(err);
@@ -24,14 +24,11 @@ const Room = () => {
         <Card.Header>Room {index}</Card.Header>
         <Card.Body>
           <blockquote className="blockquote mb-0">
-            <p>
-              {' '}
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-              posuere erat a ante.{' '}
-            </p>
-            <footer className="blockquote-footer">
-              Someone famous in <cite title="Source Title">Source Title</cite>
-            </footer>
+            <Link to={`/room/${element._id}`}>
+              {element.book.bookName}
+             
+            </Link >
+            
           </blockquote>
         </Card.Body>
       </Card>

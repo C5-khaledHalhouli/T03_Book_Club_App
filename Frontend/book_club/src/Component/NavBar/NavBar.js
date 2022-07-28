@@ -57,7 +57,7 @@ const dispatch =useDispatch()
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
                 <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
-                <Nav.Link onClick={()=>{navigate("/")}}>Room</Nav.Link>
+                <Nav.Link onClick={()=>{navigate("/rooms")}}>Room</Nav.Link>
                 <NavDropdown
                   title={`${state.userName}`}
                   id={`offcanvasNavbarDropdown-expand-${"sm"}`}

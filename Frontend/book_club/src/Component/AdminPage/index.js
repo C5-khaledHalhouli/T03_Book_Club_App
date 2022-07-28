@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import { deleteBook } from "../Redux/Reducers/book/index";
 import axios from "axios";
+import { deleteBookReadingList } from "../Redux/Reducers/book/index";
 
 const AdminPage = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,15 @@ const AdminPage = () => {
         headers: { Authorization: `Bearer ${state.token}` },
       })
       .then((result) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+      axios.delete(`http://localhost:5000/user/readinglist/${bookId}`,{
+        headers: { Authorization: `Bearer ${state.token}` }}).then((result) => {
+        
+        dispatch(deleteBookReadingList(bookId))
+        
+      })
       .catch((err) => {
         console.log(err);
       });
