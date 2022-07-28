@@ -34,6 +34,9 @@ const book = createSlice({
       state.books=state.books.filter((element)=>{
         return element._id!==action.payload
       })
+    },
+    addBook(state,action){
+      state.books=[...state.books,action.payload]
     }
   },
 });
@@ -42,6 +45,6 @@ export const {
   addReadingListBook,
   deleteBookReadingList,
   getAllBooks,
-  getReader,deleteBook
+  getReader,deleteBook,addBook
 } = book.actions;
 export default book.reducer;
