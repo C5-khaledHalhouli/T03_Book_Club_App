@@ -12,25 +12,32 @@ import SignUp from "../SignUp/index";
 import {useNavigate}  from "react-router-dom"
 import { useSelector,useDispatch } from "react-redux";
 import {signOutAction} from "../Redux/Reducers/logIn/index"
+import Modal from 'react-bootstrap/Modal';
+import axios from "axios";
+
 const NavBar = () => {
+  const [showMod, setShowMod] = useState(false);
+  const [show, setShow] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const [suggestBook, setSuggestBook] = useState("")
     const navigate=useNavigate()
 const dispatch =useDispatch()
     const state =useSelector((state)=>{
         return{
             userName:state.login.userName,
-            isLoggedIn:state.login.isLoggedIn
+            isLoggedIn:state.login.isLoggedIn,
+            token:state.login.token,
+            role:state.login.role
+
         }
     })
-  const [show, setShow] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
+  
 
-  const [account, setAccount] = useState("Account");
+ 
 
-  useEffect(() => {
-    if (localStorage.getItem("isLoggedIn") === "true") {
-      setAccount(JSON.parse(localStorage.getItem("token")).userName);
-    }
-  }, []);
+  const handleClose = () => setShowMod(false);
+  const handleShow = () => setShowMod(true);
+
   const signOut = () => {
     dispatch(signOutAction())
     
@@ -38,8 +45,51 @@ const dispatch =useDispatch()
     localStorage.removeItem("token");
   };
 
+  const suggestClick=()=>{
+    axios
+    .post(`http://localhost:5000/suggestBooks`,{
+      bookName:suggestBook
+    }, {
+      headers: { Authorization: `Bearer ${state.token}` },
+    })
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+    handleClose()
+  }
+
   return (
     <>
+    <Modal show={showMod} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Suggest Book</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Book Name</Form.Label>
+              <Form.Control
+                type="text"
+                autoFocus
+                onChange={(e)=>{
+                  setSuggestBook(e.target.value)
+                }}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={suggestClick}>
+            Send
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
         <Container fluid>
           <Navbar.Brand >Club-Book</Navbar.Brand>
@@ -69,6 +119,12 @@ const dispatch =useDispatch()
                         onClick={()=>{navigate("/readinglist")}}
                       >
                         Reading list
+                      </NavDropdown.Item>
+                      <NavDropdown.Item
+                        
+                        onClick={()=>{handleShow()}}
+                      >
+                        Suggest Book
                       </NavDropdown.Item>
                       <NavDropdown.Item
                         onClick={() => {
@@ -115,7 +171,7 @@ const dispatch =useDispatch()
         show={show}
         setShow={setShow}
         
-        setAccount={setAccount}
+        
       />
       <SignUp showSignUp={showSignUp} setShowSignUp={setShowSignUp} />
     </>

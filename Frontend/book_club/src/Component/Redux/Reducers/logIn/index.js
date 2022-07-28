@@ -6,14 +6,16 @@ const login = createSlice({
     isLoggedIn: false,
     token: "",
     userName: "Account",
+    role:""
   },
   reducers: {
     // payload({token,userName})
     loginAction(state, action) {
-      
+      console.log(action.payload);
       state.isLoggedIn = true;
       state.token = action.payload.token;
       state.userName = action.payload.userName;
+      state.role=action.payload.role
     },
 
     signOutAction(state, action) {

@@ -13,8 +13,9 @@ import AdminPage from "./Component/AdminPage/index"
 import {getAllRooms} from "./Component/Redux/Reducers/room/index"
 import RoomTable from "./Component/RoomTable";
 import axios from "axios";
-import {getAllComment} from "./Component/Redux/Reducers/comment/index"
+import SuggestBook from "./Component/SuggestBookTable";
 import RoomPage from "./Component/RoomPage";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function App() {
   const state = useSelector((state) => {
     return {
       token: state.login.token,
+      role:state.login.role
     };
   });
   useEffect(() => {
@@ -69,9 +71,11 @@ function App() {
           <Route path="/:bookId" element={<BookPage />} />
           <Route path="/rooms" element={<Room />} />
           <Route path="/readinglist" element={<ReadingListPage />} />
-          <Route path="/AdminPage"  element={<AdminPage/>}/>
-          <Route path="/roomsTable"  element={<RoomTable/>}/>
+          <Route path="/Admin/book"  element={<AdminPage/>}/>
+          <Route path="/admin/room"  element={<RoomTable/>}/>
           <Route path="/room/:bookId"  element={<RoomPage/>}/>
+          <Route path="/admin/suggestbook"  element={<SuggestBook/>}/>
+
 
         </Routes>
       </header>
