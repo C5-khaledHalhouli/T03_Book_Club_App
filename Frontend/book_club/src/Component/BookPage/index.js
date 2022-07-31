@@ -23,7 +23,7 @@ const BookPage = () => {
       </div>
       <div className="bookInfo">
         <h2>{book && book.bookName}</h2>
-        <h3>{book && book.author}</h3>
+        <h3 className="aurthorName">{book && book.author}</h3>
         <p>{book && book.description}</p>
       </div>
     </div>

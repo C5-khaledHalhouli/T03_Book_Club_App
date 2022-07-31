@@ -9,61 +9,62 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "../Login/index";
 import React, { useState, useEffect } from "react";
 import SignUp from "../SignUp/index";
-import {useNavigate}  from "react-router-dom"
-import { useSelector,useDispatch } from "react-redux";
-import {signOutAction} from "../Redux/Reducers/logIn/index"
-import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { signOutAction } from "../Redux/Reducers/logIn/index";
+import Modal from "react-bootstrap/Modal";
 import axios from "axios";
+import "./style.css"
 
 const NavBar = () => {
   const [showMod, setShowMod] = useState(false);
   const [show, setShow] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
-  const [suggestBook, setSuggestBook] = useState("")
-    const navigate=useNavigate()
-const dispatch =useDispatch()
-    const state =useSelector((state)=>{
-        return{
-            userName:state.login.userName,
-            isLoggedIn:state.login.isLoggedIn,
-            token:state.login.token,
-            role:state.login.role
-
-        }
-    })
-  
-
- 
+  const [suggestBook, setSuggestBook] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => {
+    return {
+      userName: state.login.userName,
+      isLoggedIn: state.login.isLoggedIn,
+      token: state.login.token,
+      role: state.login.role,
+    };
+  });
 
   const handleClose = () => setShowMod(false);
   const handleShow = () => setShowMod(true);
 
   const signOut = () => {
-    dispatch(signOutAction())
-    
+    dispatch(signOutAction());
+
     localStorage.setItem("isLoggedIn", false);
     localStorage.removeItem("token");
   };
 
-  const suggestClick=()=>{
+  const suggestClick = () => {
     axios
-    .post(`http://localhost:5000/suggestBooks`,{
-      bookName:suggestBook
-    }, {
-      headers: { Authorization: `Bearer ${state.token}` },
-    })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-    handleClose()
-  }
+      .post(
+        `http://localhost:5000/suggestBooks`,
+        {
+          bookName: suggestBook,
+        },
+        {
+          headers: { Authorization: `Bearer ${state.token}` },
+        }
+      )
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    handleClose();
+  };
 
   return (
     <>
-    <Modal show={showMod} onHide={handleClose}>
+      <Modal show={showMod} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Suggest Book</Modal.Title>
         </Modal.Header>
@@ -74,8 +75,8 @@ const dispatch =useDispatch()
               <Form.Control
                 type="text"
                 autoFocus
-                onChange={(e)=>{
-                  setSuggestBook(e.target.value)
+                onChange={(e) => {
+                  setSuggestBook(e.target.value);
                 }}
               />
             </Form.Group>
@@ -90,9 +91,9 @@ const dispatch =useDispatch()
           </Button>
         </Modal.Footer>
       </Modal>
-      <Navbar key={"sm"} bg="light" expand={"sm"} className="mb-3">
+      <Navbar key={"sm"}  expand={"sm"} className="mb-3">
         <Container fluid>
-          <Navbar.Brand >Club-Book</Navbar.Brand>
+          <Navbar.Brand>Club-Book</Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${"sm"}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${"sm"}`}
@@ -106,26 +107,80 @@ const dispatch =useDispatch()
             </Offcanvas.Header>
             <Offcanvas.Body>
               <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link onClick={()=>{navigate("/")}}>Home</Nav.Link>
-                <Nav.Link onClick={()=>{navigate("/rooms")}}>Room</Nav.Link>
+              {state.role !== "admin" ?<>
+              <Nav.Link
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  Home
+                </Nav.Link>
+                <Nav.Link
+                  onClick={() => {
+                    navigate("/rooms");
+                  }}
+                >
+                  Room
+                </Nav.Link>
+              </>:<>
+              </>}
+              {state.role === "admin" ?<>
+              <NavDropdown
+                  title={`${state.userName}`}
+                  id={`offcanvasNavbarDropdown-expand-${"sm"}`}
+                >
+                  <NavDropdown.Item
+                            onClick={() => {
+                              navigate("/");
+                            }}
+                          >
+                            Books Table
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => {
+                              navigate("/admin/room");
+                            }}
+                          >
+                            Rooms Table
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => {
+                              navigate("/admin/suggestbook");
+                            }}
+                          >
+                            Suggest Book Table
+                          </NavDropdown.Item>
+                </NavDropdown>
+              </>:<>
+              </>}
+                
                 <NavDropdown
                   title={`${state.userName}`}
                   id={`offcanvasNavbarDropdown-expand-${"sm"}`}
                 >
                   {state.isLoggedIn ? (
                     <>
-                      <NavDropdown.Item
-                        
-                        onClick={()=>{navigate("/readinglist")}}
-                      >
-                        Reading list
-                      </NavDropdown.Item>
-                      <NavDropdown.Item
-                        
-                        onClick={()=>{handleShow()}}
-                      >
-                        Suggest Book
-                      </NavDropdown.Item>
+                      {state.role === "user" ? (
+                        <>
+                          <NavDropdown.Item
+                            onClick={() => {
+                              navigate("/readinglist");
+                            }}
+                          >
+                            Reading list
+                          </NavDropdown.Item>
+                          <NavDropdown.Item
+                            onClick={() => {
+                              handleShow();
+                            }}
+                          >
+                            Suggest Book
+                          </NavDropdown.Item>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+
                       <NavDropdown.Item
                         onClick={() => {
                           signOut();
@@ -154,25 +209,12 @@ const dispatch =useDispatch()
                   )}
                 </NavDropdown>
               </Nav>
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                />
-                <Button variant="outline-success">Search</Button>
-              </Form>
+             
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
       </Navbar>
-      <Login
-        show={show}
-        setShow={setShow}
-        
-        
-      />
+      <Login show={show} setShow={setShow} />
       <SignUp showSignUp={showSignUp} setShowSignUp={setShowSignUp} />
     </>
   );

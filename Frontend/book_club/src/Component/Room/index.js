@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Card from 'react-bootstrap/Card';
 import "bootstrap/dist/css/bootstrap.min.css";
 import {Link} from "react-router-dom"
-
+import "./style.css"
 
 const Room = () => {
   const [room, setRoom] = useState("");
@@ -20,7 +20,7 @@ const Room = () => {
 
   return <div className="roomPage">
     {room&&room.map((element,index)=>{
-        return <Card>
+        return <Card className="roomsCard">
         <Card.Header>Room {index}</Card.Header>
         <Card.Body>
           <blockquote className="blockquote mb-0">

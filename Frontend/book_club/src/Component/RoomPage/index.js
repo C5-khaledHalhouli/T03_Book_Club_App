@@ -50,19 +50,8 @@ const RoomPage = () => {
 
   return (
     <div className="roomBookPage">
-        <Card>
-              <Card.Header>Add comment</Card.Header>
-              <Card.Body>
-                <blockquote className="blockquote mb-0">
-                  <input onChange={(e)=>{
-                    setComment(e.target.value)
-                  }}/>
-                  
-                </blockquote>
-                <button onClick={addcommentClick}>Add comment</button>
-              </Card.Body>
-            </Card>
-      {state.comments.length &&
+        
+      {state.comments.length ===0? <h3>No Comments</h3>:
         state.comments.map((element) => {
           return (
             <Card>
@@ -79,6 +68,18 @@ const RoomPage = () => {
             </Card>
           );
         })}
+        <Card>
+              <Card.Header>Add comment</Card.Header>
+              <Card.Body>
+                <blockquote className="blockquote mb-0">
+                  <input onChange={(e)=>{
+                    setComment(e.target.value)
+                  }} type="text" className="inputAddComment"/>
+                  
+                </blockquote>
+                <button onClick={addcommentClick}>Add comment</button>
+              </Card.Body>
+            </Card>
     </div>
   );
 };

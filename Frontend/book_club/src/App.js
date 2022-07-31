@@ -53,7 +53,6 @@ function App() {
       axios
       .get("http://localhost:5000/room")
       .then((result) => {
-       console.log(result);
        dispatch(getAllRooms(result.data))
       })
       .catch((err) => {
@@ -64,21 +63,26 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
+      
         <NavBar />
         <Routes>
+          
+          {state.role==="admin"?<>
+          <Route path="/"  element={<AdminPage/>}/>
+          <Route path="/admin/room"  element={<RoomTable/>}/>
+          <Route path="/admin/suggestbook"  element={<SuggestBook/>}/>
+          </>:<>
           <Route path="/" element={<MainPage />} />
           <Route path="/:bookId" element={<BookPage />} />
           <Route path="/rooms" element={<Room />} />
           <Route path="/readinglist" element={<ReadingListPage />} />
-          <Route path="/Admin/book"  element={<AdminPage/>}/>
-          <Route path="/admin/room"  element={<RoomTable/>}/>
           <Route path="/room/:bookId"  element={<RoomPage/>}/>
-          <Route path="/admin/suggestbook"  element={<SuggestBook/>}/>
+          </>}
+          
 
 
         </Routes>
-      </header>
+      
     </div>
   );
 }

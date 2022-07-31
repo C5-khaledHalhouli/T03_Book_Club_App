@@ -34,16 +34,13 @@ const MainPage = () => {
       {state.books &&
         state.books.map((element, index) => {
           return (
-            <Card style={{ width: "18rem" }} key={index + "book"}>
-              <Card.Img variant="top" src={`${element.img}`} alt={`img of ${element.bookName} book`}/>
+            <Card style={{ width: "18rem" }} key={index + "book"} className="cardBook">
+               <Link to={`/${element._id}`}><Card.Img variant="top" src={`${element.img}`} alt={`img of ${element.bookName} book`}/></Link>
               <Card.Body>
                 <Card.Title>{element.bookName}</Card.Title>
                 <Card.Text>
                   {element.description.split(" ").slice(0, 20).join(" ")}...
                   <Link to={`/${element._id}`}>see more</Link>
-                </Card.Text>
-                <Card.Text>
-                  {element.reader}
                 </Card.Text>
                 {state.isLoggedIn ? (
                   <Button
