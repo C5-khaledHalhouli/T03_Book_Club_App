@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -28,11 +28,7 @@ axios.post("http://localhost:5000/login",{email,password}).then((result)=>{
 })
 handleClose()
 }
-const form=useRef()
-const submit=(e)=>{
-  
-  console.log(11111);
-}
+
     return <Modal show={show} onHide={handleClose}>
     <Modal.Header closeButton>
       <Modal.Title>Login</Modal.Title>
@@ -60,14 +56,7 @@ setPassword(e.target.value)
             }} />
         </Form.Group>
       </Form>
-      <form ref={form} onSubmit={(e)=>{
-        e.preventDefault()
-        console.log(form);
-        submit(e)}}>
-<input name='password'/>
-<input name='password'/>
-        <button>submete</button>
-      </form>
+   
     </Modal.Body>
     <Modal.Footer>
       <Button variant="secondary" onClick={handleClose}>

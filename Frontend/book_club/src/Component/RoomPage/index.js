@@ -7,6 +7,8 @@ import { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css"
 import React,{useState} from "react";
+import Button from 'react-bootstrap/Button';
+
 
 
 const RoomPage = () => {
@@ -50,12 +52,13 @@ const RoomPage = () => {
 
   return (
     <div className="roomBookPage">
-        
+        <div className="commentDiv">
+
       {state.comments.length ===0? <h3>No Comments</h3>:
         state.comments.map((element) => {
           return (
-            <Card>
-              <Card.Header>{element.user.userName}</Card.Header>
+            <Card className="commitDiv">
+              <Card.Header className="headerCommint">{element.user.userName}</Card.Header>
               <Card.Body>
                 <blockquote className="blockquote mb-0">
                   <p>
@@ -68,8 +71,8 @@ const RoomPage = () => {
             </Card>
           );
         })}
-        <Card>
-              <Card.Header>Add comment</Card.Header>
+        <Card className="cardAddDiv">
+              <Card.Header className="headerAdd">Add comment</Card.Header>
               <Card.Body>
                 <blockquote className="blockquote mb-0">
                   <input onChange={(e)=>{
@@ -77,9 +80,11 @@ const RoomPage = () => {
                   }} type="text" className="inputAddComment"/>
                   
                 </blockquote>
-                <button onClick={addcommentClick}>Add comment</button>
+                <Button variant="outline-success" onClick={addcommentClick} className="addButton">Add comment</Button>
+                
               </Card.Body>
             </Card>
+        </div>
     </div>
   );
 };
