@@ -126,7 +126,7 @@ const NavBar = () => {
               </>}
               {state.role === "admin" ?<>
               <NavDropdown
-                  title={`${state.userName}`}
+                  title={`Tables`}
                   id={`offcanvasNavbarDropdown-expand-${"sm"}`}
                 >
                   <NavDropdown.Item

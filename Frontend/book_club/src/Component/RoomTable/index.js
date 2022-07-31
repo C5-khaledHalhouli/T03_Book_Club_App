@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import "./style.css"
 
 const RoomTable = () => {
   const dispatch = useDispatch();
@@ -95,6 +96,7 @@ const RoomTable = () => {
       });
   };
   return (
+    <div className="adminPage">
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -162,6 +164,7 @@ const RoomTable = () => {
           })}
       </tbody>
     </Table>
+    </div>
   );
 };
 

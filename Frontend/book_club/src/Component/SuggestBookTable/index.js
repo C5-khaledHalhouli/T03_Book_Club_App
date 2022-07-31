@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./style.css"
 
 
 const SuggestBook = () => {
@@ -20,7 +21,7 @@ const SuggestBook = () => {
   }, []);
 
   return (
-    <div className="suggestBookPage">
+    <div className="adminPage">
       <Table striped bordered hover>
         <thead>
           <tr>

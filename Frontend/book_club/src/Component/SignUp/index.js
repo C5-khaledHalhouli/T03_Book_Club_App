@@ -10,6 +10,7 @@ const SignUp = ({ showSignUp, setShowSignUp }) => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [massage, setMassage] = useState("");
+  const [role, setRole] = useState("")
 
   const signUpClick = () => {
     axios
@@ -17,7 +18,7 @@ const SignUp = ({ showSignUp, setShowSignUp }) => {
         userName,
         password,
         email,
-        role: "62dee1336f963dac570dbe6d",
+        role: role,
       })
       .then((result) => {
         console.log(result);
@@ -68,6 +69,16 @@ const SignUp = ({ showSignUp, setShowSignUp }) => {
                 setPassword(e.target.value);
               }}
             />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Role</Form.Label>
+            <div>
+              <input type={"radio"} id="admin"  value={"62e30ce21c58074092b10225"} onClick={(e)=>{setRole(e.target.value)}} name="role"/>
+              <label for="admin">Admin</label>
+              <input type={"radio"} id="user"  name="role" value={"62dee1336f963dac570dbe6d"} onClick={(e)=>{setRole(e.target.value)}}/>
+              <label for="user">User</label>
+            </div>
           </Form.Group>
         </Form>
         {massage}

@@ -2,3 +2,8 @@
     height: 18rem;
     width: 10rem;
 }
+.adminPage{
+    min-height: 92vh;
+    background-color: white;
+    padding: 5%;
+}
